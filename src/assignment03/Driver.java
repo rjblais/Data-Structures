@@ -23,59 +23,67 @@ public class Driver {
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		int[] array = new int[26];
-		
+
 		// Input
 		while (input.hasNextLine()) {
 			String temp = input.nextLine();
-			
-			if (temp.equalsIgnoreCase("quit")) {
+
+			if (temp.equalsIgnoreCase("quit") || temp.isEmpty()) {
 				break;
 			}
-			
+
 			for (int i = 0; i < temp.length(); i++) {
 				array[temp.charAt(i) - 'a'] += 1;
 			}
 		}
-		
+
+		// Construct Heap and put the character set in it
 		Heap heap = new Heap();
 		for (int i = 0; i < 26; i++) {
 			if (array[i] > 0) {
-				heap.add((char)(i + 'a'), array[i]);
-			}	
+				heap.add((char) (i + 'a'), array[i]);
+			}
 		}
+
+		// Output
 		System.out.println(heap);
 		System.out.println();
-	
-		System.out.println("Binary tree height: " + (int)(Math.floor(Math.log10(heap.size) / Math.log10(2) + 1)));
+
+		System.out
+				.println("Binary tree height: "
+						+ (int) (Math.floor(Math.log10(heap.size)
+								/ Math.log10(2) + 1)));
 		System.out.println("Unique characters in the tree: " + heap.size);
-	
-		
+
 		HuffmanTree h = new HuffmanTree(heap);
 		ArrayList<String> list = h.getNumericTraversal();
-		ArrayList<String> encodings =  new ArrayList<String>();
+		ArrayList<String> encodings = new ArrayList<String>();
 		Collections.sort(list);
-	
+
 		for (String item : list) {
 			System.out.println(item);
 			encodings.add(item.substring(2));
 		}
 		Collections.sort(encodings);
-		
+
 		System.out.println("shortest encoding: " + encodings.get(0));
-		System.out.println("longest encoding: " + encodings.get(encodings.size() -1));
-		
+		System.out.println("longest encoding: "
+				+ encodings.get(encodings.size() - 1));
+
 		System.out.println("Enter strings to be decoded: ");
-		
+
+		// Decode input until user inputs "quit"
 		while (input.hasNextLine()) {
 			String temp = input.nextLine();
-			
+
 			if (temp.equalsIgnoreCase("quit")) {
 				break;
 			}
-		
-		System.out.println(h.decode(temp));
+
+			System.out.println(temp + " = " + h.decode(temp));
 		}
-		
+
 		input.close();
+		System.out.println("bye");
 	}
 }

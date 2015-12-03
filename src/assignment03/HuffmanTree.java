@@ -1,3 +1,12 @@
+/**
+ * Data Structures
+ * Assignment #3: Building and Decoding Huffman Trees
+ * Ryan Blais
+ * 10/23/15
+ * 
+ * Huffman Tree data structure implementation
+ */
+
 package assignment03;
 
 import java.util.ArrayList;
@@ -6,12 +15,14 @@ import java.util.Arrays;
 public class HuffmanTree {
 	private Node head;
 	
+	// Get binary product of each node
 	public ArrayList<String> getNumericTraversal() {
 		ArrayList<String> list = new ArrayList<String>();
 		getNumericTraversal("", head, list);
 		return list;
 	}
 	
+	// Recursive helper
 	private void getNumericTraversal(String bits, Node head, ArrayList<String> list) {
 		if (head.left == null) {
 			list.add(head.letter + " " + bits);
@@ -21,8 +32,8 @@ public class HuffmanTree {
 		}
 	}
 	
+	// Copy Heap into tree format
 	public HuffmanTree(Heap source) {
-		
 		while (source.size > 0) {
 			Arrays.sort(source.array, 0, source.size);
 			if (source.size == 1) {
@@ -40,17 +51,15 @@ public class HuffmanTree {
 				source.array = shiftLeft(source.array);
 				
 				source.add(newNode);
-			}
-			
+			}	
 		}
-		
 	}
 
+	// Translate bit string into characters
 	public String decode(String bitString) {
 		Node currentNode = head;
 		String code = "";
 		for (int i = 0; i < bitString.length(); i++) {
-			
 			currentNode = bitString.charAt(i) == '0' ? currentNode.left : currentNode.right;
 			if (currentNode.hasData) {
 				code += currentNode.letter;
@@ -67,6 +76,7 @@ public class HuffmanTree {
 		return toString(head);
 	}
 	
+	// Shift contents of an array
 	public Node[] shiftLeft(Node[] nums) {
 		if (nums == null || nums.length <= 1) { return nums; }
 		Node start = nums[0];

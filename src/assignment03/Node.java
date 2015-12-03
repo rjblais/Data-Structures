@@ -1,3 +1,12 @@
+/**
+ * Data Structures
+ * Assignment #3: Building and Decoding Huffman Trees
+ * Ryan Blais
+ * 10/23/15
+ * 
+ * Node Implementation
+ */
+
 package assignment03;
 
 public class Node implements Comparable<Node>{
@@ -13,8 +22,6 @@ public class Node implements Comparable<Node>{
 
 	@Override
 	public int compareTo(Node o) {
-	
-		// TODO Auto-generated method stub
 		return this.num - o.num;
 	}
 	
