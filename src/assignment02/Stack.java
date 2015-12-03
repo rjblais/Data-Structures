@@ -1,7 +1,17 @@
+/**
+ * Data Structures
+ * Assignment #2: Stacking Shipping Containers
+ * Ryan Blais
+ * 09/28/15
+ * 
+ * Stack implementation
+ */
+
 package assignment02;
 
 public class Stack {
 
+	// Use an array as the underlying structure
 	private int[] containers;
 	private int amount = 0;
 
@@ -9,10 +19,11 @@ public class Stack {
 		containers = new int[height];
 	}
 
+	// Implement Stack operations
 	public int push(int x) {
 		containers[amount] = x;
 		amount++;
-		return x;
+		return x;					
 	}
 
 	public int pop() {

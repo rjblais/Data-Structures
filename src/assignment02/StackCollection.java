@@ -1,6 +1,16 @@
+/**
+ * Data Structures
+ * Assignment #2: Stacking Shipping Containers
+ * Ryan Blais
+ * 09/28/15
+ * 
+ * Stack collection data structure
+ */
+
 package assignment02;
 
 public class StackCollection {
+	// Use array to store Stack objects
 	private Stack[] stacks;
 	
 	public StackCollection(int numStack) {
