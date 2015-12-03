@@ -2,16 +2,19 @@ package assignment04;
 
 public class HashTable {
 
-	private int size = 0;
+	private int size = 0; // Keeps track of number of elements
+	// Initialize to twice the maximum capacity
 	private String[] stringTable = new String[200_000];
 	private int[] intTable = new int[200_000];
 
+	// Insert a element into the table
 	public void put(String s, int i) {
-		int htIndx = Math.abs(s.hashCode() % stringTable.length);
+		int htIndx = Math.abs(s.hashCode()) % stringTable.length;
 
 		if (stringTable[htIndx] != null) {
 			int step = 2;
-
+			
+			// Quadratic probing to find an empty spot
 			while (stringTable[htIndx] != null) {
 				htIndx = (htIndx + (step * step)) % stringTable.length;
 				step++;
@@ -23,8 +26,9 @@ public class HashTable {
 		size++;
 	}
 
+	// Retrieve an element from the table
 	public int get(String s) {
-		int index = s.hashCode() % stringTable.length;
+		int index = Math.abs(s.hashCode()) % stringTable.length;
 
 		int step = 2;
 
@@ -36,12 +40,14 @@ public class HashTable {
 		return (stringTable[index] != null) ? intTable[index] : -1;
 	}
 
+	// Get number of elements
 	public int size() {
 		return size;
 	}
 
+	// Check to see if element is in table
 	public boolean contains(String s) {
-		int index = s.hashCode() % stringTable.length;
+		int index = Math.abs(s.hashCode()) % stringTable.length;
 
 		int step = 2;
 
