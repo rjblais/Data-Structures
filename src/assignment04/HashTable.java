@@ -1,3 +1,12 @@
+/**
+ * Data Structures
+ * Assignment #4: LZW Compression using a Hash Table
+ * Ryan Blais
+ * 12/03/15
+ * 
+ * Hash table implementation
+ */
+
 package assignment04;
 
 public class HashTable {

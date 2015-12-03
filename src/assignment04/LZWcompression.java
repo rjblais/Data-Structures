@@ -1,6 +1,14 @@
+/**
+ * Data Structures
+ * Assignment #4: LZW Compression using a Hash Table
+ * Ryan Blais
+ * 12/03/15
+
+ * LZW Compression Algorithm implementations
+ */
+
 package assignment04;
 
-// LZW Compression Algorithm implementations
 public class LZWcompression {
 	public static String compress(String input, char start, char end) {
 		// Use hash table to store the encodings
