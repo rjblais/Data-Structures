@@ -29,11 +29,11 @@ public class Graph {
 
 	public void printMinimumSpanningTree() {
 		boolean[] reached = new boolean[vertices.length];
-		// int[] treeEdges = new int[vertices.length];
 		int cost = 0;
 
 		reached[0] = true;
 
+		// Use Prim's algorithm to find minimum spanning tree and total cost
 		for (int v = 1; v < vertices.length; v++) {
 			int x = 0, y = 0;
 
@@ -48,17 +48,17 @@ public class Graph {
 					}
 				}
 			}
-			// treeEdges[y] = x;
+
 			if (edges[x][y] != null) {
-			System.out.println(vertices[x].name + " to " + vertices[y].name
-					+ " " + edges[x][y].length);
-			cost += edges[x][y].length;
-			reached[y] = true;
+				System.out.println(vertices[x].name + " to " + vertices[y].name
+						+ " " + edges[x][y].length);
+				cost += edges[x][y].length;
+				reached[y] = true;
 			} else {
 				cost = Integer.MIN_VALUE;
 			}
 		}
-		
+
 		System.out.println("====");
 		if (cost > 0) {
 			System.out.println("Total Cost of Minimum Spanning Tree: " + cost);
@@ -67,6 +67,7 @@ public class Graph {
 		}
 	}
 
+	// Remove dirt paths
 	public void removeDirt() {
 		for (int i = 0; i < edges.length; i++) {
 			for (int j = 0; j < edges.length; j++) {
@@ -77,10 +78,12 @@ public class Graph {
 		}
 	}
 
+	// Remove paths that increase in elevation
 	public void removeUphill() {
 		for (int i = 0; i < edges.length; i++) {
 			for (int j = 0; j < edges.length; j++) {
-				if (edges[i][j] != null && vertices[i].elevation < vertices[j].elevation) {
+				if (edges[i][j] != null
+						&& vertices[i].elevation < vertices[j].elevation) {
 					edges[i][j] = null;
 				}
 			}
@@ -88,14 +91,16 @@ public class Graph {
 	}
 
 	public void printShortestPath(String from, String to) {
-		int fromIndex =	Arrays.binarySearch(vertices, from);
+		int fromIndex = Arrays.binarySearch(vertices, from);
 		int toIndex = Arrays.binarySearch(vertices, to);
-		
+
 		int[] lengths = new int[vertices.length];
 		int[] paths = new int[vertices.length];
 		boolean[] reached = new boolean[vertices.length];
 		reached[fromIndex] = true;
-		
+
+		// Find shortest path between given points
+		// Fill table with adjacent edges
 		for (int v = 0; v < vertices.length; v++) {
 			if (edges[fromIndex][v] != null) {
 				lengths[v] = edges[fromIndex][v].length;
@@ -105,29 +110,35 @@ public class Graph {
 				paths[v] = -1;
 			}
 		}
-		
+
+		// Iterate over each remaining vertex to find shortest path
 		for (int i = 1; i < vertices.length; i++) {
 			int min = Integer.MAX_VALUE, w = -1;
 			// Find the current minimum that has not been reached
 			for (int m = 0; m < vertices.length; m++) {
-				if (reached[m]) continue;
+				if (reached[m])
+					continue;
 				if (lengths[m] > 0 && lengths[m] < min) {
 					min = lengths[m];
 					w = m;
 				}
 			}
-			if (w == -1) break; // TODO this might not be needed
+			if (w == -1)
+				break;
 			reached[w] = true;
 			for (int v = 0; v < vertices.length; v++) {
-				if (reached[v]) continue;
-				// Leave the least cost path as it is or update it if a shorter one has been found
-				if (edges[w][v] != null && lengths[v] > lengths[w] + edges[w][v].length) {
+				if (reached[v])
+					continue;
+				// Leave the least cost path as it is or update it if a shorter
+				// one has been found
+				if (edges[w][v] != null
+						&& lengths[v] > lengths[w] + edges[w][v].length) {
 					lengths[v] = lengths[w] + edges[w][v].length;
 					paths[v] = w;
 				}
 			}
 		}
-		
+
 		// Build output
 		int current = toIndex;
 		if (paths[current] == -1) {
@@ -137,10 +148,12 @@ public class Graph {
 		String expression = "] " + lengths[current];
 		while (true) { // Trace backward through the path and build output
 			expression = vertices[current].name + expression;
-			
-			if (current != fromIndex) expression = " to " + expression;
-			else break;
-			
+
+			if (current != fromIndex)
+				expression = " to " + expression;
+			else
+				break;
+
 			current = paths[current];
 		}
 		expression = "[" + expression;
