@@ -26,6 +26,7 @@ public class LZWcompression {
 
 		for (int i = 1; i < input.length(); i++) {
 			nextChar = input.charAt(i);
+			if (!encodeTable.contains(nextChar + "")) continue;// Skip invalid characters
 			String s = newString + nextChar;
 
 			// Case for existing encoding
@@ -73,8 +74,11 @@ public class LZWcompression {
 			int newCode = list[i];
 
 			// Case for existing encoding
-			if (tableSize > Integer.valueOf(newCode)) {
-				tempStr = encodeTable[newCode];
+			if (tableSize > newCode) {
+				if (newCode == -1) { 
+					continue;
+				}
+ 				tempStr = encodeTable[newCode];
 				encodeTable[tableSize++] = encodeTable[oldCode]
 						+ tempStr.charAt(0);
 			// Case for new encoding
